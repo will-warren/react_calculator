@@ -1,0 +1,148 @@
+<html>
+<head>
+<script src="https://unpkg.com/react@16/umd/react.development.js"> </script>
+<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" 
+integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</head>
+<link rel="stylesheet" href="calculator.css">
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+    
+    class Calculator extends React.Component {
+        constructor() {
+            super();
+            this.state = {
+                total: 5
+            };
+            this.input = this.input.bind(this);
+            this.plus = this.plus.bind(this);
+            this.minus = this.minus.bind(this);
+            this.divide = this.divide.bind(this);
+            this.times = this.times.bind(this);
+            this.clear = this.clear.bind(this);
+            this.togglePosNeg = this.togglePosNeg.bind(this);
+            this.percent = this.percent.bind(this);
+            this.openParen = this.openParen.bind(this);
+            this.closeParen = this.closeParen.bind(this);
+            this.equals = this.equals.bind(this);
+        }
+
+        input(num) {
+            this.setState({
+                total: `${this.state.total}${num}`
+            })
+        }
+        
+        plus() {
+            this.setState({
+                total: `${this.state.total} +` 
+            })
+        }
+
+        minus() {
+            this.setState({
+                total: `${this.state.total} -` 
+            })
+        }
+
+        divide() {
+            this.setState({
+                total: `${this.state.total} /` 
+            })
+        }
+        
+        times() {
+            this.setState({
+                total: `${this.state.total} *` 
+            })
+        }
+        clear() {
+            this.setState({
+                total: 0
+            })
+        }
+
+        togglePosNeg() {
+            this.setState({
+                total: this.state.total * -1
+            })
+        }
+
+        percent() {
+            this.setState({
+                total: this.state.total *  0.01
+            })
+        }
+
+        openParen() {
+            this.setState({
+                total: `(${this.state.total}`
+            })
+        }
+
+        closeParen() {
+            this.setState({
+                total: `${this.state.total})`
+            })
+        }
+
+        equals() {
+
+        }
+        render() {
+            return (
+                <div class="container text-center">
+                    <h1>MATH TIME!</h1>
+                    <div class="squeeze">
+                        <div class="jumbotron">{this.state.total}</div>
+                        <div class="row calc-pad">
+                            <div class="col-md-2"><button class="btn btn-warning" onClick={this.clear}>clear</button></div>
+                            <div class="col-md-2"><button class="btn" onClick={this.togglePosNeg}>+/-</button></div>
+                            <div class="col-md-2"><button class="btn" onClick={this.percent}>%</button></div>
+                            <div class="col-md-2"><button class="btn" onClick={this.divide}>/</button></div>
+                            <div class="col-md-2"><button class="btn" onClick={this.openParen}>(</button></div>
+                            <div class="col-md-2"><button class="btn" onClick={this.closeParen}>)</button></div>
+                        </div>
+                        <div class="row calc-pad">
+                            <div class="col-md-3"><button class="btn" onClick={this.input.bind(this, 7)}>7</button></div>
+                            <div class="col-md-3"><button class="btn" onClick={this.input.bind(this, 8)}>8</button></div>
+                            <div class="col-md-3"><button class="btn" onClick={this.input.bind(this, 9)}>9</button></div>
+                            <div class="col-md-3"><button class="btn" onClick={this.input.bind(this, 0)}>0</button></div>
+                            
+                        </div>
+                        <div class="row calc-pad">
+                            <div class="col-md-3"><button class="btn" onClick={this.input.bind(this, 4)}>4</button></div>
+                            <div class="col-md-3"><button class="btn" onClick={this.input.bind(this, 5)}>5</button></div>
+                            <div class="col-md-3"><button class="btn" onClick={this.input.bind(this, 6)}>6</button></div>
+                            <div class="col-md-3"><button class="btn" onClick={this.minus}>-</button></div>
+                        </div>
+                        <div class="row calc-pad">
+                            <div class="col-md-3"><button class="btn" onClick={this.input.bind(this, 1)}>1</button></div>
+                            <div class="col-md-3"><button class="btn" onClick={this.input.bind(this, 2)}>2</button></div>
+                            <div class="col-md-3"><button class="btn" onClick={this.input.bind(this, 3)}>3</button></div>
+                            <div class="col-md-3"><button class="btn" onClick={this.plus}>+</button></div>
+                        </div>
+                        <div class="row calc-pad">
+                            <div class="col-md-3"><button class="btn" onClick={this.times}>x</button></div>
+                            <div class="col-md-3"><button class="btn" onClick={this.input.bind(this, '.')}>.</button></div>
+                            <div class="col-md-3"><button class="btn btn-info" onClick={this.equals}>=</button></div>
+                            <div class="col-md-3"><button class="btn" onClick={this.powerOf}>^</button></div>
+                        </div>
+                    </div>
+                    
+                </div>
+            )
+        }
+    }
+
+    ReactDOM.render(
+        <Calculator />,
+        document.getElementById("root")
+    );
+   
+    </script>
+</body>
+</html>
