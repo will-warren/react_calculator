@@ -1,14 +1,22 @@
+#calc-display {
+    font-size: 35px;
+    text-align: right;
+}
+
 .calc-pad {
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    padding: 10px 5px 10px 5px;
+    padding: 2px 2px 5px 2px;
 }
 
 .calc-pad button {
     width: 100%;
+    padding: 10px 5px 10px 5px;
     column-fill: auto;
 }
 
 .squeeze {
     margin-left: 25%;
     margin-right: 25%;
+    border: 1px solid black;
+    border-radius: 1%;
 }
