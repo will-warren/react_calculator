@@ -17,7 +17,9 @@
             this.state = {
                 display: 0,
                 total: 0,
-                method: ''
+                method: '',
+                nums: [],
+                addNew: true
             };
             this.input = this.input.bind(this);
             this.setOperator = this.setOperator.bind(this);
@@ -32,9 +34,10 @@
             if(!Number(value)) {
                 this.setOperator(value);
             } else {
-                if(this.state.display) {
+                if(this.state.addNew) {
                     this.setState({
                         display: value,
+                        addNew: false,
                     });
                 } else {
                     this.setState({
@@ -46,16 +49,26 @@
         }
         
         setOperator(op) {
-            this.setState({
-                method: op,
+            this.setState(prevState => ({
+                nums: [...prevState.nums, this.state.display]
+            })).then(() => {
+                console.log(op, this.state.nums, this.state.display)
+                if(op === '=') {
+                    this.equals();
+                } else {
+                    this.setState({
+                        method: op,
+                        addNew: true
+                    })
+                }
             })
-            this.equals();
         }
 
         clear() {
             this.setState({
                 display: 0,
-                total: 0
+                total: 0,
+                nums: []
             })
         }
 
@@ -69,7 +82,6 @@
         togglePosNeg() {
             this.setState(prevState => ({
                 display: this.state.display * -1,
-                nums: [...prevState.nums[this.state.nums.length-1] * -1]
             }))
         }
 
@@ -80,34 +92,31 @@
         }
 
         equals() {
-            console.log(this.state.nums, this.state.method);
             switch (this.state.method) {
-                case 'add':
-                    const sum = this.state.nums.reduce((acc, num) => acc + num);
+                case 'add':;
+                    const sum = this.state.nums.reduce((acc, num) => acc + num)
+                    console.log(sum, this.state.nums)
                     this.setState({
-                        total: sum,
-                        display: total
-                    })
+                        display: sum,
+                        total: sum
+                    });
                     break;
                 case 'subtract':
-                    const difference = this.state.nums.reduce((acc, num) => acc - num)
-                    console.log(difference)
                     this.setState({
-                        total: difference,
+                        total: this.state.total - this.state.display,
                         display: total
                     })
                     break;
                 case 'multiply':
-                    const product = this.state.nums.reduce((acc, num) => acc * num);
                     this.setState({
-                        total: product,
+                        total: this.state.total + this.state.display,
                         display: total
                     })
                     break;
                 case 'divide':
-                    const quotient = this.state.nums.reduce((acc, num) => acc / num);
                     this.setState({
-                        display: quotient
+                        total: this.state.total + this.state.display,
+                        display: total
                     })
                     break;
             }
@@ -148,7 +157,7 @@
                         <div class="row calc-pad">
                             <div class="col-md-3"><button class="btn btn-light" onClick={this.input.bind(this, 0)}>0</button></div>
                             <div class="col-md-3"><button class="btn btn-light" onClick={this.input.bind(this, '.')}>.</button></div>
-                            <div class="col-md-3"><button class="btn btn-info" onClick={this.equals}>=</button></div>
+                            <div class="col-md-3"><button class="btn btn-info" onClick={this.input.bind(this, '=')}>=</button></div>
                             <div class="col-md-3"><button class="btn btn-dark" onClick={this.input.bind(this, 'divide')}>/</button></div>
                         </div>
                     </div>
