@@ -16,10 +16,9 @@
             super();
             this.state = {
                 display: 0,
-                total: 0,
                 method: '',
                 nums: [],
-                addNew: true
+                isNewNum: true
             };
             this.input = this.input.bind(this);
             this.setOperator = this.setOperator.bind(this);
@@ -34,40 +33,34 @@
             if(!Number(value)) {
                 this.setOperator(value);
             } else {
-                if(this.state.addNew) {
+                if(this.state.isNewNum) {
                     this.setState({
                         display: value,
-                        addNew: false,
+                        isNewNum: false,
                     });
                 } else {
                     this.setState({
                         display: this.state.display * 10 + value,
                     }); 
                 }
-                console.log(value, this.state.nums, this.state.nums["length"]);
             }
         }
         
         setOperator(op) {
-            this.setState(prevState => ({
-                nums: [...prevState.nums, this.state.display]
-            })).then(() => {
-                console.log(op, this.state.nums, this.state.display)
-                if(op === '=') {
-                    this.equals();
-                } else {
-                    this.setState({
-                        method: op,
-                        addNew: true
-                    })
-                }
-            })
+            if(op === '=') {
+                this.equals();
+            } else {
+                this.setState({
+                    method: op,
+                    isNewNum: true,
+                    nums: [this.state.display]
+                })
+            }
         }
 
         clear() {
             this.setState({
                 display: 0,
-                total: 0,
                 nums: []
             })
         }
@@ -94,29 +87,31 @@
         equals() {
             switch (this.state.method) {
                 case 'add':;
-                    const sum = this.state.nums.reduce((acc, num) => acc + num)
-                    console.log(sum, this.state.nums)
+                    let sum = this.state.nums.reduce((acc, num) => acc + num)
+                    sum = sum + this.state.display
                     this.setState({
                         display: sum,
-                        total: sum
                     });
                     break;
                 case 'subtract':
+                    let diff = this.state.nums.reduce((acc, num) => acc - num)
+                    diff = diff - this.state.display
                     this.setState({
-                        total: this.state.total - this.state.display,
-                        display: total
+                        display: diff
                     })
                     break;
                 case 'multiply':
+                    let prod = this.state.nums.reduce((acc, num) => acc * num)
+                    prod = prod * this.state.display
                     this.setState({
-                        total: this.state.total + this.state.display,
-                        display: total
+                        display: prod
                     })
                     break;
                 case 'divide':
+                    let quo = this.state.nums.reduce((acc, num) => acc / num)
+                    quo = quo / this.state.display
                     this.setState({
-                        total: this.state.total + this.state.display,
-                        display: total
+                        display: quo
                     })
                     break;
             }
