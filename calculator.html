@@ -10,7 +10,10 @@
 <body>
     <div id="root"></div>
     <script type="text/babel">
-    
+    /*
+    * TODOS: refactor into seperate js & html files with a component for the display, buttons, and calculator,
+    *    use props for button values, evaluation process should be a bit less convoluted
+    */
     class Calculator extends React.Component {
         constructor() {
             super();
@@ -28,7 +31,7 @@
             this.percent = this.percent.bind(this);
             this.equals = this.equals.bind(this);
         }
-
+        /* handles input values TODO: make less convoluted using props */
         input(value) {
             if(!Number(value)) {
                 this.setOperator(value);
@@ -45,7 +48,7 @@
                 }
             }
         }
-        
+        /* sets the given operation method */
         setOperator(op) {
             if(op === '=') {
                 this.equals();
@@ -57,33 +60,35 @@
                 })
             }
         }
-
+        /* resets the calculator */
         clear() {
             this.setState({
                 display: 0,
                 nums: []
             })
         }
-
+        /* undoes the last action TODO: make more robust*/
         ce() {
             this.setState({
                 nums: this.state.nums["pop"],
                 display: this.state.nums[this.state.nums["length"-1]]
             })
         }
-
+        /* toggles positive or negative value */
         togglePosNeg() {
             this.setState(prevState => ({
                 display: this.state.display * -1,
             }))
         }
-
+        /* turns display into a percentage */
         percent() {
             this.setState({
                 display: this.state.display * 0.01
             })
         }
-
+        /* evaluates the list of nums & display num for the set operation method 
+        * TODO: refactor not use a switch
+        */
         equals() {
             switch (this.state.method) {
                 case 'add':;
